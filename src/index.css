@@ -37,3 +37,9 @@ body {
 .window-title-icon .terminal-icon-large {
   font-size: 20px !important;
 }
+
+/* Basic styling for markdown content in Notepad */
+.markdown-content h1, .markdown-content h2 {
+  border-bottom: 1px solid #555;
+  padding-bottom: 0.3em;
+}

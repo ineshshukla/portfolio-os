@@ -48,8 +48,9 @@ const initialFileSystem = {
         },
         'Files.app': {
           type: 'app',
-          name: 'Files',
+          name: 'Files Explorer',
           target: 'FilesApp', // This tells our system which app component to launch
+          icon: '🗂️',
         },
         'Terminal.app': {
           type: 'app',
@@ -134,14 +135,67 @@ class VirtualFileSystem {
   // --- Placeholder Write Methods (to be implemented in later phases) ---
 
   createFile(path, content = '') {
-    console.log(`(FS) Creating file at: ${path}`);
-    // Logic to add file will go here
-    this.notify(); // Notify subscribers of a change
+    const normalizedPath = path.endsWith('/') && path.length > 1 ? path.slice(0, -1) : path;
+
+    const parts = normalizedPath.split('/').filter(p => p);
+
+    if (parts.length === 0) {
+      throw new Error('Cannot create file at root.');
+    }
+
+    const newFileName = parts.pop();
+    const parentPath = parts.length > 0 ? '/' + parts.join('/') : '/';
+
+    const parentEntry = this._getEntryByPath(parentPath);
+
+    if (!parentEntry || parentEntry.type !== 'directory') {
+      throw new Error(`cannot create file '${path}': No such file or directory`);
+    }
+
+    if (parentEntry.children[newFileName]) {
+      // If a file with this name already exists, `touch` does nothing.
+      // If a directory with this name exists, we can't create a file with the same name.
+      if (parentEntry.children[newFileName].type === 'directory') {
+        throw new Error(`cannot create file '${newFileName}': Is a directory`);
+      }
+      return; // File already exists, do nothing.
+    }
+
+    parentEntry.children[newFileName] = { type: 'file', name: newFileName, content };
+    this.notify();
   }
 
   createDirectory(path) {
-    console.log(`(FS) Creating directory at: ${path}`);
-    // Logic to add directory will go here
+    // Normalize path by removing trailing slash if it exists, but not for root '/'
+    const normalizedPath = path.length > 1 && path.endsWith('/') ? path.slice(0, -1) : path;
+
+    const parts = normalizedPath.split('/').filter(p => p);
+
+    if (parts.length === 0) {
+      throw new Error('Cannot create directory at root.');
+    }
+
+    const newDirName = parts.pop();
+    const parentPath = parts.length > 0 ? '/' + parts.join('/') : '/';
+
+    const parentEntry = this._getEntryByPath(parentPath);
+
+    if (!parentEntry || parentEntry.type !== 'directory') {
+      // Mimic shell error for non-existent parent
+      throw new Error(`cannot create directory '${path}': No such file or directory`);
+    }
+
+    if (parentEntry.children[newDirName]) {
+      // Mimic shell error for existing entry
+      throw new Error(`cannot create directory '${newDirName}': File exists`);
+    }
+
+    parentEntry.children[newDirName] = {
+      type: 'directory',
+      name: newDirName,
+      children: {},
+    };
+
     this.notify();
   }
 

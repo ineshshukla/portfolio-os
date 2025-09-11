@@ -1,23 +1,40 @@
 import React from 'react';
+import TerminalIcon from '@mui/icons-material/Terminal';
 import './Icon.css';
-import { getAppIcon } from '../../utils/appIcons.jsx';
 
-const Icon = ({ name, type, target }) => {
-  const getIconEmoji = () => {
-    if (type === 'app') {
-      // Use the centralized app icon utility
-      return getAppIcon(target);
+const getIconForType = (type, name, target, customIcon) => {
+  if (customIcon) {
+    return customIcon;
+  }
+
+  if (type === 'directory') {
+    return '📁';
+  }
+
+  if (type === 'app') {
+    if (target === 'TerminalApp') {
+      return <TerminalIcon className="terminal-icon-large" />;
     }
-    if (type === 'directory') return '📁';
-    if (name.endsWith('.md')) return '📝';
-    if (name.endsWith('.pdf')) return '📄';
-    return '📄';
-  };
+    if (target === 'FilesApp') {
+      return '🗂️'; 
+    }
+    // Default app icon
+    return '⚙️';
+  }
 
+  // Default file icons based on extension
+  if (name.endsWith('.md')) return '📝';
+  if (name.endsWith('.txt')) return '📄';
+  if (name.endsWith('.pdf')) return '📕';
+
+  return '❓'; // Default for unknown files
+};
+
+const Icon = ({ name, type, target, icon }) => {
   return (
-    <div className="icon">
-      <div className="icon-image">{getIconEmoji()}</div>
-      <span className="icon-name">{name}</span>
+    <div className="icon-container">
+      <div className="icon-image">{getIconForType(type, name, target, icon)}</div>
+      <span className="icon-label">{name.replace(/\.app$/, '')}</span>
     </div>
   );
 };

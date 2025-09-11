@@ -1,16 +1,20 @@
 import React from 'react';
-import TerminalIcon from '@mui/icons-material/Terminal';
+import TerminalTwoToneIcon from '@mui/icons-material/TerminalTwoTone';
 
 // Mapping from app ID to its icons
 export const appIcons = {
   FilesApp: {
-    default: '📁',
+    default: '🗂️',
     open: '📂',
   },
   TerminalApp: {
-    default: <TerminalIcon className="terminal-icon-large" />,
-    open: <TerminalIcon className="terminal-icon-large" />,
+    default: <TerminalTwoToneIcon className="terminal-icon-large" />,
+    open: <TerminalTwoToneIcon className="terminal-icon-large" />,
   },
+  Notepad: {
+    default: '📋',
+    open: '📋',
+  }
   // Add other apps here
 };
 

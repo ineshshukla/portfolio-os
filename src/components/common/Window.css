@@ -11,8 +11,7 @@
   display: flex;
   flex-direction: column;
   resize: both;
-  overflow: auto; /* Needed for the resize handle to appear */
-  padding: 10px;
+  overflow: hidden; /* Let content scroll, not the whole window */
 }
 
 .window-container.minimized {
@@ -56,4 +55,10 @@
   cursor: pointer;
   padding: 0 8px;
   line-height: 1;
+}
+
+.window-content{
+  flex-grow: 1;
+  overflow: auto; /* Allow content to scroll */
+  padding: 0; /* The app inside will control its padding */
 }

@@ -1,22 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFileSystem } from '../../hooks/useFileSystem';
+import { getAppForFile } from '../../utils/fileAssociations';
 import Icon from '../common/Icon';
 import './FilesApp.css';
 
 const FilesApp = ({ id, path, onOpen, onNavigate }) => {
   const fs = useFileSystem();
-  const items = fs.list(path) || [];
+  // Use state to hold directory items to allow for re-rendering
+  const [items, setItems] = useState(() => fs.list(path) || []);
+
+  // Subscribe to file system changes to keep the view up-to-date
+  useEffect(() => {
+    const handleFsUpdate = () => {
+      setItems(fs.list(path) || []);
+    };
+
+    handleFsUpdate(); // Initial load and on path change
+    const unsubscribe = fs.subscribe(handleFsUpdate);
+    return unsubscribe;
+  }, [fs, path]); // Re-run if fs instance or path prop changes
 
   const handleDoubleClick = (item) => {
     const newPath = `${path === '/' ? '' : path}/${item.name}`;
     if (item.type === 'directory') {
       // Instead of opening a new window, navigate the existing one.
       if (onNavigate) {
-        onNavigate(id, { path: newPath });
+        onNavigate(id, { path: newPath, title: item.name });
       }
     } else if (item.type === 'app') {
       if (onOpen) {
-        onOpen(item.target, { path: '/', title: item.name.replace('.app', '') });
+        onOpen(item.target, { title: item.name.replace('.app', '') });
+      }
+    } else if (item.type === 'file') {
+      const appToOpen = getAppForFile(item.name);
+      if (appToOpen && onOpen) {
+        onOpen(appToOpen, { filePath: newPath });
       }
     }
   };
@@ -57,6 +75,9 @@ const FilesApp = ({ id, path, onOpen, onNavigate }) => {
             <Icon name={item.name} type={item.type} target={item.target} />
           </div>
         ))}
+        {items.length === 0 && (
+          <div className="empty-folder-message">This folder is empty.</div>
+        )}
       </div>
     </div>
   );
