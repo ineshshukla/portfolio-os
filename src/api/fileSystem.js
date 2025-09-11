@@ -10,6 +10,28 @@ const initialFileSystem = {
   type: 'directory',
   name: 'root',
   children: {
+    documents: {
+      type: 'directory',
+      name: 'documents',
+      children: {
+        'project-docs': {
+          type: 'directory',
+          name: 'project-docs',
+          children: {
+            'project1.md': {
+              type: 'file',
+              name: 'project1.md',
+              content: '# Project 1\n\nDetails about my first project.',
+            },
+            'project2.md': {
+              type: 'file',
+              name: 'project2.md',
+              content: '# Project 2\n\nDetails about my second project.',
+            },
+          },
+        },
+      },
+    },
     desktop: {
       type: 'directory',
       name: 'desktop',
@@ -29,6 +51,11 @@ const initialFileSystem = {
           name: 'Files',
           target: 'FilesApp', // This tells our system which app component to launch
         },
+        'Terminal.app': {
+          type: 'app',
+          name: 'Terminal',
+          target: 'TerminalApp',
+        },
         'folder1': {
           type: 'directory',
           name: 'folder1',
@@ -45,17 +72,6 @@ const initialFileSystem = {
             },
           },
         }
-      },
-    },
-    projects: {
-      type: 'directory',
-      name: 'projects',
-      children: {
-        'project-one.md': {
-          type: 'file',
-          name: 'project-one.md',
-          content: '# Project One\n\nDetails about my first cool project.',
-        },
       },
     },
   },

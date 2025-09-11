@@ -54,7 +54,7 @@ const FilesApp = ({ id, path, onOpen, onNavigate }) => {
       <div className="files-app-container">
         {items.map(item => (
           <div key={item.name} className="file-item" onDoubleClick={() => handleDoubleClick(item)}>
-            <Icon name={item.name} type={item.type} />
+            <Icon name={item.name} type={item.type} target={item.target} />
           </div>
         ))}
       </div>

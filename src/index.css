@@ -15,3 +15,25 @@ body {
   height: 100%;
   width: 100%;
 }
+
+/* A global class for the terminal icon to control its size in different contexts */
+.terminal-icon-large {
+  /* Using !important to ensure we override MUI's default inline styles */
+  vertical-align: middle; /* Helps align with text/emojis */
+}
+
+/* Desktop icon size */
+.desktop-item .terminal-icon-large,
+.file-item .terminal-icon-large {
+  font-size: 35px !important;
+}
+
+/* Taskbar icon size */
+.taskbar-item .terminal-icon-large {
+  font-size: 28px !important;
+}
+
+/* Window title bar icon size */
+.window-title-icon .terminal-icon-large {
+  font-size: 20px !important;
+}

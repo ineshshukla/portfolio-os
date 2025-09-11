@@ -1,9 +1,13 @@
 import React from 'react';
 import './Icon.css';
+import { getAppIcon } from '../../utils/appIcons.jsx';
 
-const Icon = ({ name, type }) => {
+const Icon = ({ name, type, target }) => {
   const getIconEmoji = () => {
-    if (type === 'app') return '📁';
+    if (type === 'app') {
+      // Use the centralized app icon utility
+      return getAppIcon(target);
+    }
     if (type === 'directory') return '📁';
     if (name.endsWith('.md')) return '📝';
     if (name.endsWith('.pdf')) return '📄';
@@ -19,4 +23,3 @@ const Icon = ({ name, type }) => {
 };
 
 export default Icon;
-

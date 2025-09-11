@@ -25,7 +25,7 @@ const Desktop = ({ onOpen }) => {
           className="desktop-item"
           onDoubleClick={() => handleDoubleClick(item)}
         >
-          <Icon name={item.name} type={item.type} />
+          <Icon name={item.name} type={item.type} target={item.target} />
         </div>
       ))}
     </div>
