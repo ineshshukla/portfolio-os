@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FileSystemProvider } from './contexts/FileSystemContext';
+import { DisturbanceProvider } from './contexts/DisturbanceContext';
 import fileSystem from './api/fileSystem';
 import Desktop from './components/Desktop';
 import Window from './components/common/Window';
+import ParticleBackground from './components/common/ParticleBackground';
 import Taskbar from './components/Taskbar';
 import FilesApp from './components/apps/FilesApp';
 import Notepad from './components/apps/Notepad';
@@ -16,7 +18,7 @@ let windowIdCounter = 0;
 let zIndexCounter = 100; // Start z-index from 100
 
 // Apps that should only have one instance
-const singleInstanceApps = new Set(['Notepad', 'TerminalApp']);
+const singleInstanceApps = new Set(['Notepad', 'TerminalApp', 'FilesApp']);
 
 function App() {
   const [openWindows, setOpenWindows] = useState([]);
@@ -227,25 +229,29 @@ function App() {
 
   return (
     <FileSystemProvider>
-      <div className="App">
-        <Desktop onOpen={openWindow} />
-        <Taskbar openWindows={openWindows} onTaskbarClick={handleTaskbarClick} />
-        {openWindows.map((win) => (
-          <Window
-            key={win.id}
-            defaultPosition={win.position}
-            appId={win.app}
-            title={win.title}
-            onClose={() => closeWindow(win.id)}
-            onMinimize={() => minimizeWindow(win.id)}
-            onFocus={() => bringToFront(win.id)}
-            isMinimized={win.isMinimized}
-            zIndex={win.zIndex}
-          >
-            {renderApp(win)}
-          </Window>
-        ))}
-      </div>
+      <DisturbanceProvider>
+        <div className="App">
+          <ParticleBackground />
+          <Desktop onOpen={openWindow} />
+          <Taskbar openWindows={openWindows} onTaskbarClick={handleTaskbarClick} />
+          {openWindows.map((win) => (
+            <Window
+              key={win.id}
+              id={win.id}
+              defaultPosition={win.position}
+              appId={win.app}
+              title={win.title}
+              onClose={() => closeWindow(win.id)}
+              onMinimize={() => minimizeWindow(win.id)}
+              onFocus={() => bringToFront(win.id)}
+              isMinimized={win.isMinimized}
+              zIndex={win.zIndex}
+            >
+              {renderApp(win)}
+            </Window>
+          ))}
+        </div>
+      </DisturbanceProvider>
     </FileSystemProvider>
   );
 }

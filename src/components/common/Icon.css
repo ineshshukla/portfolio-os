@@ -19,3 +19,16 @@
   word-wrap: break-word;
   width: 100%;
 }
+
+/* --- Icon Colors --- */
+.icon-folder {
+  color: #FFCA28; /* Amber */
+}
+
+.icon-file-text {
+  color: #90CAF9; /* Light Blue */
+}
+
+.icon-file-pdf {
+  color: #E57373; /* Light Red */
+}

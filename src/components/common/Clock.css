@@ -1,0 +1,7 @@
+.clock-container {
+  color: #e0e0e0; /* A light gray/off-white color, not green */
+  font-size: 15px; /* Larger font size */
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+}

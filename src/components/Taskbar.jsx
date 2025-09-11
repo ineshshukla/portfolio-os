@@ -1,6 +1,7 @@
 import React from 'react';
 import './Taskbar.css';
 import { getAppIcon } from '../utils/appIcons.jsx';
+import Clock from './common/Clock.jsx';
 
 const Taskbar = ({ openWindows, onTaskbarClick }) => {
   const pinnedApps = ['FilesApp', 'TerminalApp'];
@@ -19,6 +20,7 @@ const Taskbar = ({ openWindows, onTaskbarClick }) => {
 
   return (
     <div className="taskbar">
+      <Clock />
       {taskbarApps.map(appId => (
         <div
           key={appId}

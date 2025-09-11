@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Draggable from 'react-draggable';
+import { useDisturbances } from '../../contexts/DisturbanceContext';
 import { getAppIcon } from '../../utils/appIcons.jsx';
 import './Window.css';
 
 const Window = ({
   title,
+  id,
   appId,
   children,
   onClose,
@@ -15,7 +17,44 @@ const Window = ({
   defaultPosition,
 }) => {
   const nodeRef = useRef(null);
+  const { addDisturbance, removeDisturbance, updateDisturbance } = useDisturbances();
+  const disturbanceId = `window-${id}`;
 
+  // Register and unregister the window as a disturbance
+  useEffect(() => {
+    if (nodeRef.current) {
+      const rect = nodeRef.current.getBoundingClientRect();
+      addDisturbance(disturbanceId, {
+        id: disturbanceId,
+        x: rect.x,
+        y: rect.y,
+        width: rect.width,
+        height: rect.height,
+      });
+    }
+
+    return () => {
+      removeDisturbance(disturbanceId);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Effect for handling resize observation, ensuring the observer is managed correctly.
+  useEffect(() => {
+    const observer = new ResizeObserver(handleDragOrResize);
+    if (nodeRef.current) {
+      observer.observe(nodeRef.current);
+    }
+    return () => observer.disconnect(); // Cleanup the observer
+  }, [id]); // Re-create if the ID changes (which it won't for a given window)
+
+  const handleDragOrResize = () => {
+    if (nodeRef.current) {
+      const { x, y, width, height } = nodeRef.current.getBoundingClientRect();
+      updateDisturbance(disturbanceId, { id: disturbanceId, x, y, width, height });
+    }
+  };
+  
   const containerClassName = `window-container ${isMinimized ? 'minimized' : ''}`;
 
   return (
@@ -25,6 +64,8 @@ const Window = ({
       defaultPosition={defaultPosition}
       bounds="parent" // Restrict dragging to the parent container (.App)
       onStart={onFocus} // Bring to front on drag start
+      onDrag={handleDragOrResize}
+      onStop={handleDragOrResize}
     >
       <div
         className={containerClassName}

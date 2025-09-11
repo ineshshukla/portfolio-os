@@ -30,7 +30,8 @@
 }
 
 .prompt-user {
-  color: #00cc00;
+  color: rgba(0, 255, 70, 0.7);
+  text-shadow: 0 0 8px rgba(0, 255, 70, 0.6);
 }
 
 .prompt-colon {

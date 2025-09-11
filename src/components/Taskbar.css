@@ -1,41 +1,51 @@
 .taskbar {
-  position: fixed;
-  bottom: 20px;
+  position: absolute;
+  bottom: 10px; /* Give it some space from the bottom edge */
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(25, 25, 25, 0.7);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
+  width: auto; /* Dynamic width based on content */
+  height: 48px;
+  background-color: rgba(40, 40, 40, 0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid #555;
+  border-radius: 8px; /* Rounded corners for the dock look */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 8px;
-  padding: 6px;
-  z-index: 10000; /* Should be on top of everything */
+  padding: 0 8px; /* Padding on the sides of the bar */
+  gap: 4px; /* Reduced spacing between items */
+  z-index: 10000; /* Ensure it's on top of other elements */
 }
 
 .taskbar-item {
-  position: relative;
-  padding: 8px;
-  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px; /* Reduced padding inside each item */
+  border-radius: 4px;
+  transition: background-color 0.15s ease-out;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  font-size: 24px; /* For emojis */
+  position: relative; /* For the active indicator */
 }
 
 .taskbar-item:hover {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Indicator for active (running) apps */
 .taskbar-item.active::after {
   content: '';
   position: absolute;
-  bottom: -2px;
+  bottom: 2px;
   left: 50%;
   transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
-  background-color: #fff;
+  width: 5px;
+  height: 5px;
+  background-color: #e0e0e0;
   border-radius: 50%;
+}
+
+.taskbar-clock {
+  padding: 0 12px;
+  white-space: nowrap;
 }

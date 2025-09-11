@@ -9,12 +9,6 @@
   flex-wrap: wrap;
   align-content: flex-start;
   padding: 2vw; /* Add padding to keep icons away from the bezel */
-
-  /* --- Desktop Background Image --- */
-  background-image: url('/background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 .desktop-item {
