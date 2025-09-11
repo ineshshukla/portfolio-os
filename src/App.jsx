@@ -23,10 +23,28 @@ function App() {
       }
     }
 
+    // Estimate window size to keep it from spawning off-screen.
+    // Based on .window-container default of 50% width/height.
+    const windowWidth = window.innerWidth * 0.5;
+    const windowHeight = window.innerHeight * 0.5;
+
+    // Define a smaller region for the random offset, to keep windows spawning centrally.
+    const spawnOffset = { x: 200, y: 150 };
+
+    // Calculate the maximum safe coordinates for the top-left corner.
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    const maxX = screenWidth - windowWidth - spawnOffset.x;
+    const maxY = screenHeight - windowHeight - spawnOffset.y;
+
     const newWindow = {
       id: windowIdCounter++,
       app,
       title: props.title || app,
+      position: {
+        x: maxX / 2 + Math.random() * spawnOffset.x,
+        y: maxY / 3 + Math.random() * spawnOffset.y, // A bit higher than center
+      },
       ...props,
     };
     setOpenWindows(currentWindows => [...currentWindows, newWindow]);
@@ -57,9 +75,10 @@ function App() {
     <FileSystemProvider>
       <div className="App">
         <Desktop onOpen={openWindow} />
-        {openWindows.map(win => (
+        {openWindows.map((win) => (
           <Window
             key={win.id}
+            defaultPosition={win.position}
             title={win.app === 'FilesApp' ? 'Files' : win.title} // Always show 'Files' for FilesApp
             onClose={() => closeWindow(win.id)}
           >

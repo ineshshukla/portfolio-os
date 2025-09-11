@@ -2,12 +2,13 @@ import React, { useRef } from 'react';
 import Draggable from 'react-draggable';
 import './Window.css';
 
-const Window = ({ title, children, onClose }) => {
+const Window = ({ title, children, onClose, defaultPosition }) => {
   const nodeRef = useRef(null);
   return (
     <Draggable
       nodeRef={nodeRef}
       handle=".window-title-bar"
+      defaultPosition={defaultPosition}
       bounds="parent" // Restrict dragging to the parent container (.desktop)
     >
       <div className="window-container" ref={nodeRef}>
