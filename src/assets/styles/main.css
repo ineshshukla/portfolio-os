@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #000; /* A dark, retro blue/purple */
+  color: #ccc; /* Classic grayscale text */
+  overflow: hidden; /* Prevent scrollbars on the body */
+
+}
+
+* {
+  box-sizing: border-box;
+}

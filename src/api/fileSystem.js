@@ -1,0 +1,157 @@
+/**
+ * A simple in-memory file system.
+ *
+ * The structure is a nested object where keys are file/folder names.
+ * Each entry has a 'type' ('file' or 'directory') and other metadata.
+ * Directories have a 'children' object.
+ * Files have 'content'.
+ */
+const initialFileSystem = {
+  type: 'directory',
+  name: 'root',
+  children: {
+    desktop: {
+      type: 'directory',
+      name: 'desktop',
+      children: {
+        'about.md': {
+          type: 'file',
+          name: 'about.md',
+          content: '# About Me\n\nThis is a portfolio OS, a fun project to showcase my skills.',
+        },
+        'resume.pdf': {
+          type: 'file',
+          name: 'resume.pdf',
+          content: 'PDF content would be handled differently, but this is a placeholder.',
+        },
+        'Files.app': {
+          type: 'app',
+          name: 'Files',
+          target: 'FilesApp', // This tells our system which app component to launch
+        },
+        'folder1': {
+          type: 'directory',
+          name: 'folder1',
+          children: {
+            'file1.txt': {
+              type: 'file',
+              name: 'file1.txt',
+              content: 'File 1 content',
+            },
+            'file2.txt': {
+              type: 'file',
+              name: 'file2.txt',
+              content: 'File 2 content',
+            },
+          },
+        }
+      },
+    },
+    projects: {
+      type: 'directory',
+      name: 'projects',
+      children: {
+        'project-one.md': {
+          type: 'file',
+          name: 'project-one.md',
+          content: '# Project One\n\nDetails about my first cool project.',
+        },
+      },
+    },
+  },
+};
+
+class VirtualFileSystem {
+  constructor() {
+    this.fs = JSON.parse(JSON.stringify(initialFileSystem)); // Deep copy
+    this.subscribers = new Set();
+  }
+
+  // --- Subscriber Methods ---
+  subscribe(callback) {
+    this.subscribers.add(callback);
+    return () => this.subscribers.delete(callback); // Return an unsubscribe function
+  }
+
+  notify() {
+    this.subscribers.forEach(callback => callback());
+  }
+
+  // --- Helper Methods ---
+  _getEntryByPath(path) {
+    const parts = path.split('/').filter(p => p);
+    let current = this.fs;
+
+    for (const part of parts) {
+      if (current.type !== 'directory' || !current.children[part]) {
+        return null; // Path not found
+      }
+      current = current.children[part];
+    }
+    return current;
+  }
+
+  // --- Public API Methods ---
+
+  /**
+   * Lists the contents of a directory.
+   * @param {string} path - The path to the directory (e.g., '/desktop').
+   * @returns {Array|null} An array of file/directory entries, or null if path is not a directory.
+   */
+  list(path) {
+    const entry = this._getEntryByPath(path);
+    if (entry && entry.type === 'directory') {
+      return Object.values(entry.children);
+    }
+    return null;
+  }
+
+  /**
+   * Gets a single file or directory entry.
+   * @param {string} path - The full path to the entry.
+   * @returns {object|null} The entry object or null if not found.
+   */
+  get(path) {
+    return this._getEntryByPath(path);
+  }
+
+  // --- Placeholder Write Methods (to be implemented in later phases) ---
+
+  createFile(path, content = '') {
+    console.log(`(FS) Creating file at: ${path}`);
+    // Logic to add file will go here
+    this.notify(); // Notify subscribers of a change
+  }
+
+  createDirectory(path) {
+    console.log(`(FS) Creating directory at: ${path}`);
+    // Logic to add directory will go here
+    this.notify();
+  }
+
+  delete(path) {
+    console.log(`(FS) Deleting entry at: ${path}`);
+    // Logic to delete file/directory will go here
+    this.notify();
+  }
+}
+
+/**
+ * To make this singleton HMR-proof in a Vite/React environment,
+ * we can attach it to a global object (`window`) during development.
+ * This ensures that the same filesystem instance persists across hot reloads,
+ * preserving its state.a
+ */
+let fileSystem;
+
+if (import.meta.env.DEV) {
+  if (!window._virtualFileSystem) {
+    window._virtualFileSystem = new VirtualFileSystem();
+  }
+  fileSystem = window._virtualFileSystem;
+} else {
+  // In production, we create a fresh instance.
+  fileSystem = new VirtualFileSystem();
+}
+
+export default fileSystem;
