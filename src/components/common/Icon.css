@@ -11,6 +11,15 @@
 .icon-image {
   font-size: 35px; /* Default icon size */
   margin-bottom: 5px;
+  display: flex; /* Added to help center the image */
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+}
+
+/* Style for when the icon is an actual image tag */
+.icon-image img {
+  height: 40px;
+  object-fit: contain; /* Ensures the image scales nicely */
 }
 
 .icon-label {

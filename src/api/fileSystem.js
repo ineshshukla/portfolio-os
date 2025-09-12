@@ -57,6 +57,11 @@ const initialFileSystem = {
           name: 'Terminal',
           target: 'TerminalApp',
         },
+        'FlappyBird.app': {
+          type: 'app',
+          name: 'Flappy Bird',
+          target: 'FlappyBirdApp',
+        },
         'folder1': {
           type: 'directory',
           name: 'folder1',

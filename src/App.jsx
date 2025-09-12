@@ -9,6 +9,7 @@ import Taskbar from './components/Taskbar';
 import FilesApp from './components/apps/FilesApp';
 import Notepad from './components/apps/Notepad';
 import TerminalApp from './components/apps/TerminalApp';
+import FlappyBird from './components/apps/FlappyBird/FlappyBird';
 import './assets/styles/main.css';
 import './App.css';
 
@@ -90,14 +91,27 @@ function App() {
           y: Math.max(50, maxY / 3 + Math.random() * spawnOffset.y),
         };
 
+    // Default window properties
+    const windowDefaults = {
+      isResizable: true,
+      size: null, // Use CSS defaults
+    };
+
+    // App-specific overrides
+    if (app === 'FlappyBirdApp') {
+      windowDefaults.isResizable = false;
+      windowDefaults.size = { width: 650, height: 400 };
+    }
+
     const newWindow = {
       id: windowIdCounter++,
       app,
-      title: props.title || app,
+      ...windowDefaults,
+      ...props, // User-provided props can override defaults
+      title: props.title || app, // Ensure title is set
       position,
       zIndex: zIndexCounter++,
       isMinimized: false,
-      ...initialProps,
     };
     setOpenWindows(currentWindows => [...currentWindows, newWindow]);
   };
@@ -222,6 +236,8 @@ function App() {
         );
        case 'TerminalApp':
         return <TerminalApp />;
+      case 'FlappyBirdApp':
+        return <FlappyBird />;
       default:
         return <div>Unknown App: {win.app}</div>;
     }
@@ -240,6 +256,8 @@ function App() {
               id={win.id}
               defaultPosition={win.position}
               appId={win.app}
+              isResizable={win.isResizable}
+              defaultSize={win.size}
               title={win.title}
               onClose={() => closeWindow(win.id)}
               onMinimize={() => minimizeWindow(win.id)}

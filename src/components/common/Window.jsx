@@ -15,6 +15,8 @@ const Window = ({
   isMinimized,
   zIndex,
   defaultPosition,
+  isResizable = true,
+  defaultSize,
 }) => {
   const nodeRef = useRef(null);
   const { addDisturbance, removeDisturbance, updateDisturbance } = useDisturbances();
@@ -57,6 +59,14 @@ const Window = ({
   
   const containerClassName = `window-container ${isMinimized ? 'minimized' : ''}`;
 
+  const windowStyle = {
+    zIndex,
+    width: defaultSize?.width ? `${defaultSize.width}px` : undefined,
+    height: defaultSize?.height ? `${defaultSize.height}px` : undefined,
+    // Conditionally disable the CSS 'resize' property
+    resize: isResizable ? 'both' : 'none',
+  };
+
   return (
     <Draggable
       nodeRef={nodeRef}
@@ -70,7 +80,7 @@ const Window = ({
       <div
         className={containerClassName}
         ref={nodeRef}
-        style={{ zIndex }}
+        style={windowStyle}
         onMouseDown={onFocus} // Bring to front on click
       >
         <div className="window-title-bar">

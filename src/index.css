@@ -33,9 +33,21 @@ body {
   font-size: 28px !important;
 }
 
+/* Specifically for `img` tags in the taskbar */
+.taskbar-item img.terminal-icon-large {
+  height: auto !important;
+  width: 35px !important;
+}
+
 /* Window title bar icon size */
 .window-title-icon .terminal-icon-large {
   font-size: 20px !important;
+}
+
+/* Specifically for `img` tags in the window title bar */
+.window-title-icon img.terminal-icon-large {
+  height: 20px !important;
+  width: auto !important;
 }
 
 /* Basic styling for markdown content in Notepad */

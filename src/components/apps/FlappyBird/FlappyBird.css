@@ -1,0 +1,69 @@
+/* We'll need to import a pixel font in the main index.css or index.html for this to work fully */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.flappy-bird-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #70c5ce; /* Classic Flappy Bird sky color */
+  overflow: hidden; /* Important for containing the game elements */
+  position: relative; /* Establishes a positioning context for children */
+  cursor: pointer;
+  /* Prevent text selection on rapid clicks */
+  -webkit-user-select: none; /* Safari */
+  user-select: none;
+}
+
+.flappy-game-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.flappy-start-screen {
+  position: absolute;
+  text-align: center;
+  color: white;
+  font-family: 'Press Start 2P', cursive, sans-serif; /* A pixel-style font */
+  text-shadow: 2px 2px #333;
+}
+
+.flappy-title {
+  font-size: 2rem;
+}
+
+.flappy-instructions {
+  margin-top: 20px;
+  font-size: 0.8rem;
+}
+
+.flappy-game-over-screen {
+  position: absolute;
+  text-align: center;
+  color: white;
+  font-family: 'Press Start 2P', cursive, sans-serif;
+  text-shadow: 2px 2px #333;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px 40px;
+  border-radius: 10px;
+  border: 2px solid white;
+}
+
+.flappy-score {
+  margin: 20px 0;
+  font-size: 1.2rem;
+}
+
+.flappy-retry-button {
+  font-family: 'Press Start 2P', cursive, sans-serif;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border: 2px solid white;
+  background-color: #de6433;
+  color: white;
+  cursor: pointer;
+  text-shadow: 1px 1px #000;
+}

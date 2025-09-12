@@ -1,32 +1,26 @@
 import React from 'react';
-import TerminalIcon from '@mui/icons-material/Terminal';
 import './Icon.css';
 import FolderIcon from '@mui/icons-material/Folder';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import ArticleIcon from '@mui/icons-material/Article';
+import { getAppIcon } from '../../utils/appIcons';
 
 const getIconForType = (type, name, target, customIcon) => {
   if (customIcon) {
     return customIcon;
   }
 
-  if (type === 'directory') {
-    return <FolderIcon className="terminal-icon-large icon-folder" />;
+  if (type === 'app') {
+    // getAppIcon returns a React element. We need to check if it's an `img`
+    // or a MUI icon component.
+    const appIcon = getAppIcon(target, 'default');
+
+    if (appIcon !== '❓') return appIcon;
   }
 
-  if (type === 'app') {
-    if (target === 'TerminalApp') {
-      return <TerminalIcon className="terminal-icon-large icon-terminal" />;
-    }
-    if (target === 'FilesApp') {
-      return <FolderIcon className="terminal-icon-large icon-folder" />;
-    }
-    if (target === 'Notepad') { // Corrected from NotepadApp to match appIcons.jsx
-      return <DescriptionIcon className="terminal-icon-large icon-file-text" />;
-    }
-    // Default app icon
-    return '⚙️';
+  if (type === 'directory') {
+    return <FolderIcon className="terminal-icon-large icon-folder" />;
   }
 
   // Default file icons based on extension

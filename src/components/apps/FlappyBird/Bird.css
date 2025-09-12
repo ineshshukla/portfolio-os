@@ -1,0 +1,12 @@
+.bird {
+  position: absolute;
+  pointer-events: none;
+}
+
+.bird-sprite {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated; /* Keep that crisp pixel look */
+  pointer-events: none;
+}
