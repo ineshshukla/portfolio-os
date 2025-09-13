@@ -10,6 +10,10 @@ const Notepad = ({
   onContentChange,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
+  // Defensive check: If openFiles isn't provided or is empty, we can't proceed.
+  if (!openFiles || openFiles.length === 0) {
+    return <div className="viewer-placeholder">No file open</div>;
+  }
   const activeFile = openFiles[activeFileIndex];
   const editorRef = useRef(null);
 

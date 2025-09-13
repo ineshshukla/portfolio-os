@@ -107,8 +107,8 @@ function App() {
       id: windowIdCounter++,
       app,
       ...windowDefaults,
-      ...props, // User-provided props can override defaults
-      title: props.title || app, // Ensure title is set
+      ...initialProps, // Use the potentially modified props
+      title: initialProps.title || app, // Ensure title is set
       position,
       zIndex: zIndexCounter++,
       isMinimized: false,

@@ -1,0 +1,60 @@
+/* Pipe.css */
+.pipe {
+  position: absolute;
+  /* A more pronounced gradient to suggest a cylindrical shape */
+  background: linear-gradient(90deg, #62b71b 0%, #88d438 50%, #62b71b 100%);
+  box-sizing: border-box;
+  /* Use inset shadows for a smoother 3D effect instead of hard borders */
+  box-shadow:
+    inset 7px 0 10px -2px rgba(255, 255, 255, 0.5), /* Softer highlight on the left */
+    inset -7px 0 10px -2px rgba(0, 0, 0, 0.3),   /* Softer shadow on the right */
+    inset 0 0 15px rgba(0, 0, 0, 0.2);           /* General inner shadow for depth */
+}
+
+/* For the top pipe, remove the border that would be at the top of the screen */
+.top-pipe {
+  border-top: none;
+}
+
+/* For the bottom pipe, remove the border that would be at the bottom of the screen */
+.bottom-pipe {
+  border-bottom: none;
+}
+
+.pipe-rim {
+  position: absolute;
+  width: 115%; /* Make it pop out a bit more */
+  left: -7.5%; /* Center it */
+  height: 35px; /* Make it a bit taller */
+  /* Gradient for the rim */
+  background: linear-gradient(90deg, #54882a 0%, #74bf2e 50%, #54882a 100%);
+  /* Full border for the rim */
+  border: 4px solid #457321;
+  border-radius: 8px;
+  box-sizing: border-box;
+  /* Add a shadow to make it stand out from the pipe body */
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Add an inner highlight to the rim for a 3D effect */
+.pipe-rim::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  height: 8px;
+  background: linear-gradient(90deg, #d8f8b8, #a0e060);
+  border-radius: 4px;
+  opacity: 0.6;
+}
+
+/* Position the rim at the bottom of the top pipe */
+.top-pipe .pipe-rim {
+  bottom: -5px; /* Overlap slightly for a better connection */
+}
+
+/* Position the rim at the top of the bottom pipe */
+.bottom-pipe .pipe-rim {
+  top: -5px; /* Overlap slightly for a better connection */
+}

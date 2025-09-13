@@ -82,8 +82,8 @@ const ParticleBackground = () => {
         // --- Vertical Physics (PD Controller for stable oscillation) ---
         
         // Define constants for the sine wave
-        const amplitude = 2;
-        const spatialFrequency = 0.02;
+        const amplitude = 2.5;
+        const spatialFrequency = 0.02;  
         const temporalFrequency = 0.0015;
 
         // 1. Calculate the target position (where the particle should be on the wave)
@@ -97,7 +97,7 @@ const ParticleBackground = () => {
         this.vy += (targetY - this.y) * Kp;
 
         // 4. Apply a damping force to correct velocity (Derivative term)
-        const Kd = 0.04; // Damping
+        const Kd = 0.02; // Damping
         this.vy += (targetVy - this.vy) * Kd;
 
         this.x += this.vx;
@@ -148,7 +148,7 @@ const ParticleBackground = () => {
           if (distance < particleGap * 2) {
             ctx.beginPath();
             ctx.strokeStyle = `rgba(0, 255, 70, ${0.4 * (1 - distance / (particleGap * 2))})`;
-            ctx.lineWidth = 0.2;
+            ctx.lineWidth = 0.5;
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.stroke();
