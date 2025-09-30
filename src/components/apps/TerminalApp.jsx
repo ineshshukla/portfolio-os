@@ -32,6 +32,7 @@ const IntroBlock = () => ({ type: 'markdown', text: INTRO_MARKDOWN });
 
 const TerminalApp = () => {
     const fs = useFileSystem();
+    const [iterator, setIterator] = useState(0);
     const [input, setInput] = useState('');
     const [history, setHistory] = useState([IntroBlock()]);
     const [cwd, setCwd] = useState('/'); // Current Working Directory
@@ -51,6 +52,7 @@ const TerminalApp = () => {
 
     const handleInputChange = (e) => {
         setInput(e.target.value);
+        setIterator(0); // Reset iterator when input changes
     };
 
     const handleInputKeyDown = async (e) => {
@@ -77,6 +79,23 @@ const TerminalApp = () => {
 
             commandHistory.current.push(command);
             setInput('');
+        }else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (commandHistory.current.length > 0 && iterator < commandHistory.current.length) {
+                setIterator(prevIterator => prevIterator + 1);
+                const lastCommand = commandHistory.current[commandHistory.current.length - 1 - iterator]; 
+                setInput(lastCommand || '');
+            }
+        }else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (commandHistory.current.length > 0 && iterator > 0) {
+                setIterator(prevIterator => prevIterator - 1);
+                const nextCommand = commandHistory.current[commandHistory.current.length - 1 - iterator + 1];
+                setInput( nextCommand || '');
+            }else if (iterator === 0) {
+                setInput(''); // Reset input if at the top of history
+                setIterator(0);
+            }
         }
     };
 
