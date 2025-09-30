@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.aboutme-container {
+  width: 100%;
+  height: 100%;
+  background-color: #2d2d2d;
+  color: #eee;
+  font-family: 'Press Start 2P', cursive, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  user-select: none;
+  overflow: hidden;
+}
+
+.aboutme-initial-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.aboutme-name {
+  font-size: 2.5rem;
+  color: #4caf50; /* Green from Snake game */
+  text-shadow: 3px 3px #222;
+  margin: 0;
+}
+
+.aboutme-title {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
+
+.aboutme-nav-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.aboutme-nav-buttons button {
+  font-family: 'Press Start 2P', cursive, sans-serif;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border: 2px solid white;
+  background-color: #569cd6; /* Blue from terminal */
+  color: white;
+  cursor: var(--cursor-pointer);
+  text-shadow: 1px 1px #000;
+  transition: background-color 0.15s ease-out;
+  width: 250px;
+}
+
+.aboutme-nav-buttons button:hover {
+  background-color: #6caee0;
+}
+
+.aboutme-section-view {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.aboutme-sidebar {
+  width: 180px;
+  flex-shrink: 0;
+  background-color: #1e1e1e;
+  border-right: 2px solid #555;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+
+.aboutme-sidebar button {
+  font-family: 'Press Start 2P', cursive, sans-serif;
+  font-size: 0.8rem;
+  padding: 10px;
+  border: none;
+  background: none;
+  color: #aaa;
+  cursor: var(--cursor-pointer);
+  text-align: left;
+  transition: all 0.15s ease-out;
+}
+
+.aboutme-sidebar button:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.aboutme-sidebar button.active {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.aboutme-back-button {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  text-align: center !important;
+  border: 1px solid #555 !important;
+}
+
+.aboutme-content {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  text-align: left;
+}

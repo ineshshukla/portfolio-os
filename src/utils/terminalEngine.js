@@ -14,34 +14,34 @@ const resolvePath = (path, cwd) => {
   return resolve(cwd, path);
 };
 
-const hop = async (fs, cwd, args) => {
+const cd = async (fs, cwd, args) => {
   if (args.length === 0) {
-    // 'hop' with no arguments could go to a home directory in the future,
+    // 'cd' with no arguments could go to a home directory in the future,
     // but for now we require a path.
-    return { output: 'hop: missing operand' };
+    return { output: 'cd: missing operand' };
   }
   const targetPath = resolvePath(args[0], cwd);
 
   const item = fs.get(targetPath);
 
   if (!item) {
-    return { output: `hop: no such file or directory: ${args[0]}` };
+    return { output: `cd: no such file or directory: ${args[0]}` };
   }
 
   if (item.type !== 'directory') {
-    return { output: `hop: not a directory: ${args[0]}` };
+    return { output: `cd: not a directory: ${args[0]}` };
   }
 
   // Return the new CWD, and no output on success
   return { newCwd: targetPath, output: '' };
 };
 
-const reveal = async (fs, cwd, args) => {
+const ls = async (fs, cwd, args) => {
   const targetPath = args.length > 0 ? resolvePath(args[0], cwd) : cwd;
   const items = fs.list(targetPath);
 
   if (!items) {
-    return { output: `reveal: cannot access '${args[0] || targetPath}': No such file or directory` };
+    return { output: `ls: cannot access '${args[0] || targetPath}': No such file or directory` };
   }
 
   if (items.length === 0) {
@@ -106,8 +106,8 @@ const touch = async (fs, cwd, args) => {
 };
 
 const commands = {
-  hop,
-  reveal,
+  cd,
+  ls,
   mkdir,
   cat,
   touch,

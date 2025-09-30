@@ -20,8 +20,8 @@ const INTRO_MARKDOWN = `
 This is a toy os with several fun things to play with. Have fun!
 
 Available commands:
-=> **hop [path]** -- Changes the current working directory.
-=> **reveal [path]** -- Lists files and directories.
+=> **cd [path]** -- Changes the current working directory.
+=> **ls [path]** -- Lists files and directories.
 => **mkdir <directory>** — Creates a new directory.
 => **man inesh** — Displays an about me section.
 => **cat <file>** — Displays the content of a file.

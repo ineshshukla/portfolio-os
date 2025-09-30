@@ -148,7 +148,7 @@ const ParticleBackground = () => {
           if (distance < particleGap * 2) {
             ctx.beginPath();
             ctx.strokeStyle = `rgba(0, 255, 70, ${0.4 * (1 - distance / (particleGap * 2))})`;
-            ctx.lineWidth = 0.5;
+            ctx.lineWidth = 1.2;
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.stroke();

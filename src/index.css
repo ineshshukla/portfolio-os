@@ -20,6 +20,7 @@ body {
 .terminal-icon-large {
   /* Using !important to ensure we override MUI's default inline styles */
   vertical-align: middle; /* Helps align with text/emojis */
+  image-rendering: pixelated; /* Keep that crisp pixel look when scaling */
 }
 
 /* Desktop icon size */

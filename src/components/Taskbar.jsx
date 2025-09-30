@@ -4,7 +4,7 @@ import { getAppIcon } from '../utils/appIcons.jsx';
 import Clock from './common/Clock.jsx';
 
 const Taskbar = ({ openWindows, onTaskbarClick }) => {
-  const pinnedApps = ['FilesApp', 'TerminalApp'];
+  const pinnedApps = ['AboutMeApp', 'FilesApp', 'TerminalApp'];
 
   // Determine which apps are currently running (open or minimized)
   const runningApps = openWindows.map(win => win.app);

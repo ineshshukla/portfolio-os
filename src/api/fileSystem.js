@@ -62,6 +62,17 @@ const initialFileSystem = {
           name: 'Flappy Bird',
           target: 'FlappyBirdApp',
         },
+        'Snake.app': {
+          type: 'app',
+          name: 'Snake',
+          target: 'SnakeApp',
+        },
+        'AboutMe.app': {
+          type: 'app',
+          name: 'About',
+          target: 'AboutMeApp',
+          icon: '👨‍💻',
+        },
         'folder1': {
           type: 'directory',
           name: 'folder1',

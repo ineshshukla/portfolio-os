@@ -10,4 +10,5 @@
   width: 100%;
   height: 100%;
   overflow: hidden; /* Prevents scrollbars if a window is dragged partially off-screen */
+  cursor: var(--cursor-default);
 }

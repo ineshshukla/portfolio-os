@@ -8,6 +8,7 @@ import TerminalTwoToneIcon from '@mui/icons-material/TerminalTwoTone';
 import FolderTwoToneIcon from '@mui/icons-material/FolderTwoTone';
 import FolderOpenTwoToneIcon from '@mui/icons-material/FolderOpenTwoTone';
 import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
+import ContactsTwoToneIcon from '@mui/icons-material/ContactsTwoTone';
 import Flappy from '../assets/flappy.png';
 
 
@@ -28,6 +29,14 @@ export const appIcons = {
   FlappyBirdApp: {
     default: <img src={Flappy} alt="Flappy Bird" className="terminal-icon-large icon-flappy" />,
     open: <img src={Flappy} alt="Flappy Bird" className="terminal-icon-large icon-flappy" />,
+  },
+  SnakeApp: {
+    default: <span className="terminal-icon-large">🐍</span>,
+    open: <span className="terminal-icon-large">🐍</span>,
+  },
+  AboutMeApp: {
+    default: <ContactsTwoToneIcon className="terminal-icon-large icon-about" />,
+    open: <ContactsTwoToneIcon className="terminal-icon-large icon-about" />,
   },
   // Add other apps here
 };

@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.snake-game-container {
+  width: 100%;
+  height: 100%;
+  background-color: #0d0d0d;
+  color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', cursive, sans-serif;
+  position: relative;
+  user-select: none;
+}
+
+.snake-score {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 1.2rem;
+  color: #ccc;
+  z-index: 4; /* Ensure score is above the snake */
+}
+
+.snake-grid {
+  position: relative;
+  background-color: #1a1a1a;
+  /* Retro grid pattern */
+  background-image:
+    linear-gradient(to right, #2a2a2a 1px, transparent 1px),
+    linear-gradient(to bottom, #2a2a2a 1px, transparent 1px);
+  /* Use an inset shadow for the border to prevent layout shifts */
+  box-shadow: inset 0 0 0 2px #333, inset 0 0 10px #000;
+}
+
+.snake-segment {
+  position: absolute;
+  background: linear-gradient(to bottom, #4caf50, #388e3c);
+  border: 1px solid #388e3c;
+  box-sizing: border-box;
+  border-radius: 20%;
+  z-index: 2;
+}
+
+.snake-segment.head {
+  background: linear-gradient(to bottom, #4caf50, #388e3c);
+  z-index: 3;
+  position: relative;
+}
+
+/* Eye for the snake */
+.snake-segment.head::after {
+  content: '';
+  position: absolute;
+  background-color: black;
+  border-radius: 50%;
+  width: 20%;
+  height: 20%;
+  top: 25%;
+  left: 25%;
+}
+
+/* Head border-radius based on direction */
+.head.dir-up { border-radius: 40% 40% 20% 20%; }
+.head.dir-down { border-radius: 20% 20% 40% 40%; }
+.head.dir-left { border-radius: 40% 20% 20% 40%; }
+.head.dir-right { border-radius: 20% 40% 40% 20%; }
+
+/* Eye position based on direction */
+.head.dir-up::after { top: 25%; }
+.head.dir-down::after { top: 55%; }
+.head.dir-left::after { left: 25%; }
+.head.dir-right::after { left: 55%; }
+
+.snake-segment.penultimate-tail {
+  border-radius: 50%;
+  transform: scale(0.8);
+}
+
+.snake-segment.tail {
+  border-radius: 50%;
+  transform: scale(0.5);
+}
+
+.snake-food {
+  position: absolute;
+  object-fit: contain; /* Ensure the image scales nicely within the tile */
+  image-rendering: pixelated;
+  z-index: 1;
+}
+
+.snake-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Make the overlay a container for the centered, styled box */
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* Copied from Flappy Bird for the retro popup look */
+  padding: 20px 40px;
+  border-radius: 10px;
+  z-index: 5; /* Ensure overlay is on top of everything */
+}
+
+.snake-title {
+  font-size: 2rem;
+  color: #4caf50;
+  text-shadow: 2px 2px #222;
+}
+
+.snake-instructions {
+  margin-top: 20px;
+  font-style: italic;
+  color: #aaa;
+}
+
+.snake-difficulty-selector {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.snake-difficulty-button,
+.snake-retry-button {
+  padding: 10px 20px;
+  font-size: 0.8rem;
+  font-family: inherit;
+  background-color: #4caf50;
+  border: 2px solid white;
+  color: white;
+  cursor: pointer;
+  text-shadow: 1px 1px #000;
+  transition: background-color 0.15s ease-out;
+}
+
+.snake-difficulty-button:hover,
+.snake-retry-button:hover {
+  background-color: #66bb6a;
+}
+
+.snake-retry-button {
+  margin-top: 20px;
+}

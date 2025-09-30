@@ -10,6 +10,8 @@ import FilesApp from './components/apps/FilesApp';
 import Notepad from './components/apps/Notepad';
 import TerminalApp from './components/apps/TerminalApp';
 import FlappyBird from './components/apps/FlappyBird/FlappyBird';
+import AboutMe from './components/apps/AboutMe/AboutMe';
+import Snake from './components/apps/Snake/Snake';
 import './assets/styles/main.css';
 import './App.css';
 
@@ -19,7 +21,7 @@ let windowIdCounter = 0;
 let zIndexCounter = 100; // Start z-index from 100
 
 // Apps that should only have one instance
-const singleInstanceApps = new Set(['Notepad', 'TerminalApp', 'FilesApp']);
+const singleInstanceApps = new Set(['Notepad', 'TerminalApp', 'FilesApp', 'SnakeApp', 'AboutMeApp']);
 
 function App() {
   const [openWindows, setOpenWindows] = useState([]);
@@ -29,7 +31,9 @@ function App() {
   useEffect(() => {
     if (!didBoot.current) {
       didBoot.current = true;
-      openWindow('TerminalApp', { title: 'Terminal', centered: true });
+      openWindow('TerminalApp', { title: 'Terminal', centered: false });
+      openWindow('AboutMeApp', { title: 'About Me', centered: true });
+
     }
   }, []); // Empty array ensures this runs only once on mount
 
@@ -101,6 +105,10 @@ function App() {
     if (app === 'FlappyBirdApp') {
       windowDefaults.isResizable = false;
       windowDefaults.size = { width: 650, height: 400 };
+    }
+    if (app === 'SnakeApp') {
+      windowDefaults.isResizable = false;
+      windowDefaults.size = { width: 440, height: 480 };
     }
 
     const newWindow = {
@@ -183,9 +191,11 @@ function App() {
       // App is not running, open it
       if (appId === 'FilesApp') {
         openWindow('FilesApp', { title: 'Files', path: '/' });
-      } else if (appId === 'TerminalApp') {
+      } else if (appId === 'AboutMeApp') {
+        openWindow('AboutMeApp', { title: 'About Me' });
+      }else if (appId === 'TerminalApp') {
         openWindow('TerminalApp', { title: 'Terminal' });
-      }
+      } 
     } else {
       // App is running
       const topWindow = getTopWindow();
@@ -238,6 +248,10 @@ function App() {
         return <TerminalApp />;
       case 'FlappyBirdApp':
         return <FlappyBird />;
+      case 'SnakeApp':
+        return <Snake />;
+      case 'AboutMeApp':
+        return <AboutMe />;
       default:
         return <div>Unknown App: {win.app}</div>;
     }
